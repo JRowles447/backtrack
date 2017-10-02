@@ -211,7 +211,7 @@ if __name__ == '__main__':
     # csp_solver = CSP_Solver('puz-100.txt')
     # solved_board, num_guesses = csp_solver.solve()
     # csp_solver.sudoku.write('puz-100-solved.txt')
-    csp_solver_mrv = CSP_Solver_MRV('puz-090.txt')
+    csp_solver_mrv = CSP_Solver_MRV('puz-026.txt')
     solved_board, num_guesses = csp_solver_mrv.solve()
     print(solved_board)
     print(num_guesses)
