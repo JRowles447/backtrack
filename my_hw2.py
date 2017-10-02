@@ -29,23 +29,21 @@ class CSP_Solver(object):
         (assignments) required to solve the problem.
         YOU MUST EDIT THIS FUNCTION!!!!!
         """
-        print(self.sudoku.board_str())
         if(self.sudoku.complete()): # Base case, the board is complete
             return self.sudoku, self.guesses
+
         # State all the valid nums
         order_dom = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
         # find the empty space
         (line, pos) = self.find_empty()
-        # for consistency check
-        domain = self.find_domain(line, pos)
+
         for value in order_dom:
             self.guesses += 1
             if value in self.find_domain(line, pos):
                 self.sudoku.board[line][pos] = value
                 result = self.solve()
                 if self.sudoku.complete():
-                    # print("complete")
-                    print(str(self.sudoku.board_str()) + "\nguesses: " +str(self.guesses) + "\n")
                     return self.sudoku.board, self.guesses
                 self.sudoku.board[line][pos] = 0
         return None
@@ -122,4 +120,8 @@ class CSP_Solver_MRV(object):
 if __name__ == '__main__':
     csp_solver = CSP_Solver('puz-100.txt')
     solved_board, num_guesses = csp_solver.solve()
-    csp_solver_mrv = CSP_Solver_MRV('puz-001.txt')
+    csp_solver.sudoku.write('puz-100-solved.txt')
+
+    # print(solved_board)
+    # print(num_guesses)
+    # csp_solver_mrv = CSP_Solver_MRV('puz-001.txt')
