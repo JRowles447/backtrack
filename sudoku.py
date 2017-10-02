@@ -49,7 +49,7 @@ class Sudoku(object):
         """
         Writes the board to file "filename".
         """
-        with open('solved/'+filename, 'w') as f:
+        with open('solvedMRV/'+filename, 'w') as f:
             f.write(self.board_str())
 
     def board_str(self):
