@@ -29,6 +29,7 @@ class CSP_Solver(object):
         (assignments) required to solve the problem.
         YOU MUST EDIT THIS FUNCTION!!!!!
         """
+        print(self.sudoku.board_str())
         if(self.sudoku.complete()): # Base case, the board is complete
             return self.sudoku, self.guesses
         # State all the valid nums
@@ -45,7 +46,6 @@ class CSP_Solver(object):
                 if self.sudoku.complete():
                     # print("complete")
                     print(str(self.sudoku.board_str()) + "\nguesses: " +str(self.guesses) + "\n")
-                    print(self.sudoku.overwritten())
                     return self.sudoku.board, self.guesses
                 self.sudoku.board[line][pos] = 0
         return None
@@ -88,8 +88,9 @@ class CSP_Solver(object):
         rows = self.sudoku.board[((line_num // 3)*3): ((line_num//3)*3 + 3)]
         box = [line[((pos // 3)*3): ((pos // 3)*3 + 3)] for line in rows]
         for x in box:
-            if x in domain:
-                domain.remove(x)
+            for y in x:
+                if y in domain:
+                    domain.remove(y)
         return domain
 
 class CSP_Solver_MRV(object):
@@ -119,6 +120,6 @@ class CSP_Solver_MRV(object):
 
 
 if __name__ == '__main__':
-    csp_solver = CSP_Solver('puz-001.txt')
+    csp_solver = CSP_Solver('puz-100.txt')
     solved_board, num_guesses = csp_solver.solve()
     csp_solver_mrv = CSP_Solver_MRV('puz-001.txt')
