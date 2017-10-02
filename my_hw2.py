@@ -115,11 +115,15 @@ class CSP_Solver_MRV(object):
         (assignments) required to solve the problem.
         YOU MUST EDIT THIS FUNCTION!!!!!
         """
-        if (self.sudoku.complete()):  # Base case, the board is complete
+        # Base case, the board is complete
+        if (self.sudoku.complete()):
             return self.sudoku, self.guesses
-        if self.find_mrv() == None: # if the mrv is 0, that means that there was a failure
+
+        # if the mrv is 0, that means that there was a failure
+        if self.find_mrv() == None:
             return None
-        (line, pos) = self.find_mrv() # there is a space with domain > 0
+
+        (line, pos) = self.find_mrv()
         domain = self.find_domain(line, pos)
         for value in domain:
             self.guesses += 1
@@ -127,37 +131,34 @@ class CSP_Solver_MRV(object):
                 self.sudoku.board[line][pos] = value
                 self.solve()
                 if self.sudoku.complete():
-                    print(self.sudoku.board_str())
-                    print(self.guesses)
-                    print('\n')
                     return self.sudoku.board, self.guesses
                 self.sudoku.board[line][pos] = 0
         return None
 
 
     def find_mrv(self):
-        print(self.sudoku.board_str())
+        """
+        Finds the mrv and returns the positional coordinates for the board.
+
+        :return: (line number, position)
+        """
         empty_spaces = self.find_all_empty()
         # Map tuples to list of valid domain
         domain_list = [self.find_domain(x[0], x[1]) for x in empty_spaces]
         dict = {}
         for x in empty_spaces:
             dict[(x[0], x[1])] = len(self.find_domain(x[0], x[1]))
-        print("maps spaces")
         # determine the next space to place
         domain_size = 0
         (line, pos) = (-1, -1)
-        print(dict)
         while domain_size < 10:
-            print(domain_size)
-
+            # find the key (coordinate of board) with the most restricted domain and return it
             for key, value in dict.items():
+                # return None if there are any spaces with 0, since these are invalid boards
                 if value == 0:
-                    print('returning None!!!!')
                     return None
                 if value == domain_size:
                     (line, pos) = key
-                    print((line, pos))
                     return (line, pos)
             domain_size += 1
 
@@ -210,12 +211,8 @@ if __name__ == '__main__':
     # csp_solver = CSP_Solver('puz-100.txt')
     # solved_board, num_guesses = csp_solver.solve()
     # csp_solver.sudoku.write('puz-100-solved.txt')
-
-    # print(solved_board)
-    # print(num_guesses)
-    csp_solver_mrv = CSP_Solver_MRV('puz-100.txt')
+    csp_solver_mrv = CSP_Solver_MRV('puz-090.txt')
     solved_board, num_guesses = csp_solver_mrv.solve()
-    csp_solver_mrv.sudoku.write('puz-100-solved.txt')
     print(solved_board)
     print(num_guesses)
 
