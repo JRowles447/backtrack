@@ -10,24 +10,10 @@ class CSP_Solver(object):
         self.sudoku = Sudoku(puzzle_file)
         self.guesses = 0
 
-
-    ################################################################
-    ### YOU MUST EDIT THIS FUNCTION!!!!!
-    ### We will test your code by constructing a csp_solver instance
-    ### e.g.,
-    ### csp_solver = CSP_Solver('puz-001.txt')
-    ### solved_board, num_guesses = csp_solver.solve()
-    ### so your `solve' method must return these two items.
-    ################################################################
-    ########
-    #  Use a dictionary for "assignment", map each key (tuple) to a single value
-    #
-    #
-    ########
     def solve(self):
         """
-        Solves the Sudoku CSP and returns a list of lists representation
-        of the solved sudoku puzzle as well as the number of guesses
+        Solves the Sudoku CSP and returns printed version of the
+        solved sudoku puzzle as well as the number of guesses
         (assignments) required to solve the problem.
         """
         if(self.sudoku.complete()): # Base case, the board is complete
@@ -101,20 +87,13 @@ class CSP_Solver_MRV(object):
         self.sudoku = Sudoku(puzzle_file)
         self.guesses = 0
 
-    ################################################################
-    ### YOU MUST EDIT THIS FUNCTION!!!!!
-    ### We will test your code by constructing a csp_solver instance
-    ### e.g.,
-    ### csp_solver_mrv = CSP_Solver_MRV('puz-001.txt')
-    ### solved_board, num_guesses = csp_solver_mrv.solve()
-    ### so your `solve' method must return these two items.
-    ################################################################
+#
     def solve(self):
         """
         Solves the Sudoku CSP and returns a list of lists representation
         of the solved sudoku puzzle as well as the number of guesses
         (assignments) required to solve the problem.
-        YOU MUST EDIT THIS FUNCTION!!!!!
+
         """
         # Base case, the board is complete
         if (self.sudoku.complete()):
@@ -219,20 +198,11 @@ class CSP_Solver_MRV_FC(object):
         self.sudoku = Sudoku(puzzle_file)
         self.guesses = 0
 
-    ################################################################
-    ### YOU MUST EDIT THIS FUNCTION!!!!!
-    ### We will test your code by constructing a csp_solver instance
-    ### e.g.,
-    ### csp_solver_mrv = CSP_Solver_MRV('puz-001.txt')
-    ### solved_board, num_guesses = csp_solver_mrv.solve()
-    ### so your `solve' method must return these two items.
-    ################################################################
     def solve(self):
         """
         Solves the Sudoku CSP and returns a list of lists representation
         of the solved sudoku puzzle as well as the number of guesses
         (assignments) required to solve the problem.
-        YOU MUST EDIT THIS FUNCTION!!!!!
         """
         # Base case, the board is complete
         if (self.sudoku.complete()):
