@@ -17,7 +17,7 @@ Uses Python version 3.5.3
 ## Sample Output
 ---
 ```
->>> python my_hw2.py mrv puz-001.txt
+>>> python backtrack.py mrv puz-001.txt
 7 8 1 6 3 2 9 4 5
 9 5 2 7 1 4 6 3 8
 4 3 6 8 9 5 7 1 2
