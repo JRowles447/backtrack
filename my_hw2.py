@@ -1,4 +1,5 @@
 from sudoku import Sudoku
+import argparse
 
 
 class CSP_Solver(object):
@@ -8,6 +9,7 @@ class CSP_Solver(object):
     def __init__(self, puzzle_file):
         self.sudoku = Sudoku(puzzle_file)
         self.guesses = 0
+
 
     ################################################################
     ### YOU MUST EDIT THIS FUNCTION!!!!!
@@ -27,7 +29,6 @@ class CSP_Solver(object):
         Solves the Sudoku CSP and returns a list of lists representation
         of the solved sudoku puzzle as well as the number of guesses
         (assignments) required to solve the problem.
-        YOU MUST EDIT THIS FUNCTION!!!!!
         """
         if(self.sudoku.complete()): # Base case, the board is complete
             return self.sudoku, self.guesses
@@ -44,7 +45,7 @@ class CSP_Solver(object):
                 self.sudoku.board[line][pos] = value
                 self.solve()
                 if self.sudoku.complete():
-                    return self.sudoku.board, self.guesses
+                    return self.sudoku.board_str(), self.guesses
                 self.sudoku.board[line][pos] = 0
         return None
 
@@ -133,7 +134,7 @@ class CSP_Solver_MRV(object):
                 self.sudoku.board[line][pos] = value
                 self.solve()
                 if self.sudoku.complete():
-                    return self.sudoku.board, self.guesses
+                    return self.sudoku.board_str(), self.guesses
                 self.sudoku.board[line][pos] = 0
         return None
 
@@ -249,7 +250,7 @@ class CSP_Solver_MRV_FC(object):
                 self.sudoku.board[line][pos] = value
                 self.solve()
                 if self.sudoku.complete():
-                    return self.sudoku.board, self.guesses
+                    return self.sudoku.board_str(), self.guesses
                 self.sudoku.board[line][pos] = 0
         return None
 
@@ -325,12 +326,28 @@ class CSP_Solver_MRV_FC(object):
         return domain
 
 if __name__ == '__main__':
-    # csp_solver = CSP_Solver('puz-100.txt')
-    # solved_board, num_guesses = csp_solver.solve()
-    # csp_solver.sudoku.write('puz-100-solved.txt')
-    csp_solver_mrv = CSP_Solver_MRV('puz-026.txt')
-    solved_board, num_guesses = csp_solver_mrv.solve()
-    # csp_solver_mrv.sudoku.write('puz-100-solved.txt')
-    print(solved_board)
-    print(num_guesses)
+
+    parser = argparse.ArgumentParser(description='Solves sudoku with MRV.')
+
+    parser.add_argument('type', help='type of heuristic')
+    parser.add_argument('file', help='file to read puzzle from')
+
+    args = parser.parse_args()
+
+    # a regular csp solver without heuristics
+    file_name = args.file
+    if(args.type == 'r'):
+        csp_solver = CSP_Solver(file_name)
+        solved_board, num_guesses = csp_solver.solve()
+    # csp solver utilizing minimum remaining value heuristic
+    if (args.type == 'mrv'):
+        csp_solver = CSP_Solver_MRV(file_name)
+        solved_board, num_guesses = csp_solver.solve()
+    # csp solver utilizing forward checking and minimum remaining value heuristic
+    if (args.type == 'f'):
+        csp_solver = CSP_Solver_MRV_FC(file_name)
+        solved_board, num_guesses = csp_solver.solve()
+
+    print(solved_board + '\n')
+    print("Took " + str(num_guesses) + " guesses")
 
